@@ -19,6 +19,8 @@ describe Customer do
    customer.add_rental(rental_1)
    customer.add_rental(rental_2)
    customer.add_rental(rental_3)
-   expect(customer.statement).to include("You earned 4 frequent renter points")
+   result = customer.statement
+   puts result
+   expect(result).to include("You earned 4 frequent renter points")
   end
 end
