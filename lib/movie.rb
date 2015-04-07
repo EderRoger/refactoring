@@ -1,6 +1,6 @@
 class Movie
   REGULAR = 0
-  NEW_RELEASES = 1
+  NEW_RELEASE = 1
   CHILDRENS = 2
 
   attr_reader :title

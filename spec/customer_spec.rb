@@ -7,7 +7,7 @@ describe Customer do
   end
 
   let(:rental_2) do
-    Rental.new(Movie.new("Theory of Everything", Movie::NEW_RELEASES),4)
+    Rental.new(Movie.new("Theory of Everything", Movie::NEW_RELEASE),4)
   end
 
   let(:rental_3) do
