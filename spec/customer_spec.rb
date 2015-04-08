@@ -3,15 +3,15 @@ require 'spec_helper'
 describe Customer do
 
   let(:rental_1) do
-   Rental.new(Movie.new("Spider Man", Movie::REGULAR),3)
+   Rental.new(Movie.new("Spider Man", RegularPrice.new),3)
   end
 
   let(:rental_2) do
-    Rental.new(Movie.new("Theory of Everything", Movie::NEW_RELEASE),4)
+    Rental.new(Movie.new("Theory of Everything", NewReleasePrice.new),4)
   end
 
   let(:rental_3) do
-    Rental.new(Movie.new("Tanged", Movie::CHILDRENS),5)
+    Rental.new(Movie.new("Tanged", Movie::ChildrensPrice.new),5)
   end
 
   it 'check statement result rental movies list' do

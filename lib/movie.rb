@@ -15,18 +15,18 @@ class Movie
 
   def price_code=(value)
     @price_code = value
-    @price = case price_code
-             when REGULAR then RegularPrice.new
-             when NEW_RELEASE then NewReleasePrice.new
-             when CHILDRENS then ChildrensPrice.new
-             end
+   # @price = case price_code
+    #         when REGULAR then RegularPrice.new
+    #         when NEW_RELEASE then NewReleasePrice.new
+    #         when CHILDRENS then ChildrensPrice.new
+    #         end
   end
 
   def charge(days_rented)
-    @price.charge(days_rented)
+    @price_code.charge(days_rented)
   end
 
   def frequent_renter_points(days_rented)
-    (price_code == NEW_RELEASE && days_rented > 1) ? 2 : 1
+    @price_code.frequent_renter_points(days_rented)
   end
 end
