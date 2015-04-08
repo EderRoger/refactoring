@@ -11,7 +11,7 @@ describe Customer do
   end
 
   let(:rental_3) do
-    Rental.new(Movie.new("Tanged", Movie::ChildrensPrice.new),5)
+    Rental.new(Movie.new("Tanged", ChildrensPrice.new),5)
   end
 
   it 'check statement result rental movies list' do
