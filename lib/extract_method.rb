@@ -18,4 +18,16 @@ class ExtractMethod
     end
 
 end
+#extract calculaion
+def calculate_outstanding
+  outstanding = 0.0
+  @orders.each do |order|
+    outstading += order.amount
+  end
+  outstading
+end
 
+#closure
+def calculate_method_clojure
+  @orders.inject(0,0) { |resul, order| result += order.amount}
+end
