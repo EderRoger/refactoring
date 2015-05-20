@@ -49,7 +49,7 @@ class Product
       if base_price > 1000
         LuxuryProduct.new(base_price)
       else
-        Product.new(bae_price)
+        Product.new(base_price)
       end
     end
   end
