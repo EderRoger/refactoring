@@ -164,7 +164,101 @@ class Laptop
   end
 end
 
+# Usincg ExpressionBuilder refactoring
 
+class Person
+  def save
+    http.post(:first_name, :last_name, :ssn).to(
+      'http://www.example.com/person'
+    )
+  end
 
+  private
 
+  def http
+    GatewayExpressionBuilder.new(self)
+  end
+end
 
+class GatewayExpressionBuilder
+  def initialize(subject)
+    @subject = subject
+  end
+
+  def post(attributes)
+    @attributes = attributes
+  end
+
+  def to(address)
+    PostGateway.save do |persist|
+      persist.subject = @subject
+      persist.attributes = @attributes
+      persist.to = address
+    end
+  end
+end
+# next we will change company class
+class Company < DomainObject
+  attr_accessor :name, :tax_id
+
+  def save
+    http.get(:name, :tax_id).to('http://www.example.com/companies')
+  end
+end
+
+class DomainObject
+  def http
+    GatewayExpressionBuilder.new(self)
+  end
+end
+
+# changing Gateway do not use hardcode to post and get
+#
+class GatewayExpressionBuilder
+  # ...
+  def post(attributes)
+    @attributes = attributes
+    @gateway = PostGateway
+  end
+
+  def get(attributes)
+    @attributes = attributes
+    @gateway = GetGateway
+  end
+
+  def to(address)
+    @gateway.save do |persist|
+      persist.subject = @subject
+      persist.attributes = @attributes
+      persist.to = address
+    end
+  end
+end
+
+# now laptop class with authentication
+
+class Laptop
+  attr_accessor :assigned_to, :serial_number
+
+  def save
+    http.post(:assigned_to, :serial_number).with_authentication.to(
+      'http://www.example.com/issued_laptop'
+    )
+  end
+end
+
+# last change in GatewayExpressionBuilder is to add authentication
+class GatewayExpressionBuilder
+  # ...
+  def with_authentication
+    @with_authentication = true
+  end
+  def to(address)
+    @gateway.save do |persist|
+      persist.subject = @subject
+      persist.attributes = @attributes
+      persist.authenticate = @with_authentication
+      persist.to = address
+    end
+  end
+end
