@@ -49,7 +49,7 @@ class Gateway
   end
 
   def execute
-    request = Net::HTTP::Post.new(utl.path)
+    request = Net::HTTP::Post.new(url.path)
     attribute_hash = attributes.inject({}) do |result, attribute|
       result[attribute.to_s] = subject.send attribute
       result
@@ -103,7 +103,7 @@ class PostGateway < Gateway
   end
 end
 
-class GetGatway < Gateway
+class GetGateway < Gateway
   def build_request
     parameters = attributes.collect do |attribute|
       "#{attribute}=#{subject.send(attribute)}"
